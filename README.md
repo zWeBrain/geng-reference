@@ -2,7 +2,11 @@
 
 > **信息检索项目**
 >
-> 11811721 庄湛
+> 图片背景来自pixiv
+
+
+
+![geng-intro](https://raw.githubusercontent.com/zWeBrain/geng-reference/main/3.jpg?token=ALD3KUEGBSB26NYPXDYKPYTAJ4IMW)
 
 
 
@@ -15,4 +19,3 @@
 ## 动漫推荐：说出你的热爱
 
 ![acg-recommend](https://raw.githubusercontent.com/zWeBrain/geng-reference/main/1.jpg?token=ALD3KUG7N6T4L7CUUJM6ZJDAJ4HWK)
-
