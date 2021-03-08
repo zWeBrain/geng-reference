@@ -1,0 +1,154 @@
+{% load static %}
+<html lang="cn">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="{% static "images/favicon.ico" %}">
+    <link rel="stylesheet" href="{% static "style/index.css" %} " type="text/css">
+    <title>信息检索项目</title>
+</head>
+<body>
+<div class="navigate_bar">
+    <a href="#" class="logo">信息检索项目</a>
+    <ul class="nav">
+        <li><a href="#home">介绍</a></li>
+        <li><a href="#geng">梗百科</a></li>
+        <li><a href="#suggest">动漫推荐</a></li>
+        <li><a href="#cluster">动漫聚类</a></li>
+    </ul>
+</div>
+
+<div class="describe-area" id="home">
+    <div class="text-part">
+        <h1 class="text t1"> 项目介绍</h1>
+        <p> 本项目通过对一千余部动漫弹幕建立词袋模型的倒排索引,</p>
+        <p> &nbsp 并主要利用BM25向量空间模型对检索进行打分，利用层次聚类和K-means进行聚类。</p>
+        <p> 通过打分机制和文本间距离的计算，我们设计了三个主要功能:</p>
+        <p style="color: #f5395a"><b>
+            1. "梗"通常指动漫中一些喜闻乐见的桥段，你了解哪些"梗"呢？</b>
+        </p>
+        <p> &nbsp 在梗百科中，你可以快速得到你想要查询的“梗”的相关出处（会有很多惊喜的）。</p>
+        <p style="color: #f5dd5d"><b>
+            2. 每个人都有独特的审美，你了解你的看番风格嘛？</b>
+        </p>
+        <p> &nbsp 在动漫推荐中，我们会为您推荐最属于你看番风格的动漫（这都取决于你们发的弹幕的）。</p>
+        <p style="color: #5de8f5"><b>
+            3. 你喜欢看什么类型的动漫呢？这或许隐藏在你爱发的弹幕中...</b>
+        </p>
+        <p> &nbsp 在动漫聚类中，我们利用动漫间的余弦相似度进行聚类，并简单命名来达到分类的效果。</p>
+    </div>
+</div>
+
+
+<div class="geng-part" id="geng">
+    <form action="#geng" method="post">
+        {% csrf_token %}
+        <h1 class="text t2">梗百科: 追寻你的热爱</h1>
+        <div class="form-row fr1">
+            <label>
+                <input type="text" name='query' class="search-field sentence"
+                       placeholder="木叶飞舞之处，火亦生生不息" value={{ query }}>
+            </label>
+            <input class="search-btn btn2" type="submit" value="查询"/>
+            <table class="text top_table" cellspacing="2" cellpadding="5" width="800" height="40">
+                <caption style="color: snow; ">梗相关剧集（Top 10）</caption>
+                {% for line in result %}
+                    <tr>
+                        <td style="color: snow; "> {{ line }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </form>
+</div>
+
+
+<div class="suggest-area" id="suggest">
+    <form action="#suggest" method="post">
+        {% csrf_token %}
+        <h1 class="text t3">动漫推荐: 说出你的热爱</h1>
+        <div class="form-row fr2">
+            <label>
+                <select class="select2-container se1" name="se1">
+                    <option> {{ se1 }}</option>
+                    {% for line in form %}
+                        <option> {{ line }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <label>
+                <select class="select2-container se2" name="se2">
+                    <option> {{ se2 }}</option>
+                    {% for line in form %}
+                        <option> {{ line }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <label>
+                <select class="select2-container se3" name="se3">
+                    <option> {{ se3 }}</option>
+                    {% for line in form %}
+                        <option> {{ line }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <label>
+                <select class="select2-container se4" name="se4">
+                    <option> {{ se4 }}</option>
+                    {% for line in form %}
+                        <option> {{ line }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <label>
+                <select class="select2-container se5" name="se5">
+                    <option> {{ se5 }}</option>
+                    {% for line in form %}
+                        <option> {{ line }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+        </div>
+        <div class="form-row fr3">
+            <table class="text top_table" border="0" cellspacing="2" cellpadding="5" width="700" height="40">
+                <caption style="color: #f3f0f0; ">这是给你的动漫推荐</caption>
+                {% for line in suggests %}
+                    <tr>
+                        <td style="color: #ffffff; ">{{ line }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <input class="search-btn btn3" type="submit" value="给我推荐">
+        </div>
+    </form>
+</div>
+
+<div class="cluster-area" id="cluster">
+    <form action="#cluster" method="post">
+        {% csrf_token %}
+        <h1 class="text t4">动漫聚类: 找到你的热爱</h1>
+        <label>
+            <select class="select2-container se6" name="se6">
+                <option> {{ se6 }}</option>
+                {% for line in form3 %}
+                    <option> {{ line }}</option>
+                {% endfor %}
+            </select>
+        </label>
+        <input class="search-btn btn4" type="submit" value="给我瞅瞅">
+        <table class="text cluster_table" cellspacing="2" cellpadding="5" width="800" height="40">
+            <caption style="color: snow; ">随机推荐五部该类动漫</caption>
+            {% for line in cluster %}
+                <tr>
+                    <td style="color: snow; "> {{ line }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </form>
+
+</div>
+
+</body>
+
+</html>
+
+
